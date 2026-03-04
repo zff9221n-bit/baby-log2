@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝贝自由台账</title>
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 p-4">
+    <h1 class="text-2xl font-bold text-pink-600 mb-6 text-center">🍼 宝贝成长记录</h1>
+
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <button onclick="logEvent('feeding', 120)" class="bg-white p-4 rounded-xl shadow text-lg">🍼 喂奶 120ml</button>
+        <button onclick="logEvent('sleep')" class="bg-white p-4 rounded-xl shadow text-lg">😴 开始睡觉</button>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow mb-8">
+        <p class="text-gray-600 mb-2">下次喂奶提醒：</p>
+        <input type="number" id="remindInterval" value="3" class="border p-1 w-12"> 小时后
+        <button onclick="setReminder()" class="ml-4 bg-pink-500 text-white px-4 py-1 rounded">开启提醒</button>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h2 class="font-bold mb-4">最近流水 (本地存储)</h2>
+        <ul id="logList" class="space-y-2 text-sm"></ul>
+    </div>
+
+    <script>
+        // 1. 初始化本地数据库
+        const db = new Dexie("BabyDB");
+        db.version(1).stores({ logs: "++id, type, time, value" });
+
+        // 2. 记录事件
+        async function logEvent(type, value = 0) {
+            await db.logs.add({ type, time: new Date().toLocaleString(), value });
+            alert("已记录！");
+            renderLogs();
+        }
+
+        // 3. 渲染列表
+        async function renderLogs() {
+            const allLogs = await db.logs.orderBy('id').reverse().limit(5).toArray();
+            const list = document.getElementById('logList');
+            list.innerHTML = allLogs.map(log => 
+                `<li class="border-b pb-1">${log.time} - <b>${log.type}</b> ${log.value ? log.value+'ml' : ''}</li>`
+            ).join('');
+        }
+
+        // 4. 定时提醒逻辑
+        function setReminder() {
+            const hours = document.getElementById('remindInterval').value;
+            alert(`${hours}小时后我会提醒你喂奶 (请保持网页不关闭)`);
+            
+            setTimeout(() => {
+                // 触发手机震动和通知
+                if (Notification.permission === "granted") {
+                    new Notification("🍼 喂奶时间到啦！", { body: "离上次喂奶已经过去很久了" });
+                } else {
+                    alert("🍼 喂奶时间到啦！");
+                }
+            }, hours * 3600 * 1000);
+        }
+
+        // 初次加载
+        if (Notification.permission !== "denied") Notification.requestPermission();
+        renderLogs();
+    </script>
+</body>
+</html>

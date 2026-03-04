@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>宝贝成长台账-全能补记版</title>
+    <title>宝贝成长记录-全能补记版</title>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -92,7 +92,7 @@
         // --- 提醒功能 ---
         function setRemind(type) {
             const h = document.getElementById(type === 'feed' ? 'feedAlert' : 'sleepAlert').value;
-            const msg = type === 'feed' ? "奶点到了！宝宝该喝奶啦🍼" : "觉点到了！准备带宝宝哄睡吧😴";
+            const msg = type === 'feed' ? "饿了！宝宝该喝奶啦🍼" : "该睡觉了！准备带宝宝哄睡吧😴";
             alert(`${h}小时后将提醒：${msg}\n(请保持网页不要彻底关闭)`);
             setTimeout(() => {
                 if (Notification.permission === "granted") new Notification("宝贝台账提醒", { body: msg });

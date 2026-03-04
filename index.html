@@ -2,184 +2,162 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宝贝成长台账</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>宝贝成长台账-安全增强版</title>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 p-4">
-    <h1 class="text-2xl font-bold text-indigo-600 mb-6 text-center">🍼 宝贝成长台账</h1>
-
-    <div class="bg-white p-6 rounded-2xl shadow-sm mb-4 border border-slate-100">
-        <h2 class="text-sm font-bold mb-3 text-slate-500 uppercase tracking-wider">记录喂奶</h2>
-        <div class="flex items-center gap-2 mb-4">
-            <input type="number" id="milkAmount" value="120" 
-                   class="border-2 border-slate-200 rounded-xl p-3 w-full text-xl focus:outline-none focus:border-indigo-500"
-                   placeholder="毫升">
-            <span class="text-slate-400 font-bold">ml</span>
-        </div>
-        <div class="grid grid-cols-4 gap-2 mb-4">
-            <button onclick="setAmount(60)" class="bg-slate-100 py-2 rounded-lg text-slate-600 text-sm">60</button>
-            <button onclick="setAmount(120)" class="bg-slate-100 py-2 rounded-lg text-slate-600 text-sm">120</button>
-            <button onclick="setAmount(150)" class="bg-slate-100 py-2 rounded-lg text-slate-600 text-sm">150</button>
-            <button onclick="setAmount(180)" class="bg-slate-100 py-2 rounded-lg text-slate-600 text-sm">180</button>
-        </div>
-        <button onclick="logFeeding()" class="w-full bg-indigo-500 text-white p-4 rounded-xl font-bold text-lg shadow-lg shadow-indigo-200 active:scale-95 transition-transform">
-            ✅ 记录喂奶
-        </button>
-    </div>
-
-    <div class="bg-white p-6 rounded-2xl shadow-sm mb-4 border border-slate-100">
-        <h2 class="text-sm font-bold mb-3 text-slate-500 uppercase tracking-wider">睡眠管理</h2>
+<body class="bg-slate-50 text-slate-800 pb-20">
+    <div class="bg-gradient-to-br from-teal-500 to-emerald-600 p-6 rounded-b-[2.5rem] shadow-lg mb-6 text-white text-center">
+        <h1 class="text-sm opacity-80 mb-4 font-medium tracking-widest">TODAY'S SUMMARY</h1>
         <div class="grid grid-cols-2 gap-4">
-            <button id="btnStartSleep" onclick="startSleep()" class="flex flex-col items-center bg-violet-500 text-white p-4 rounded-xl font-bold shadow-lg shadow-violet-100 active:scale-95 transition-transform">
-                <span class="text-2xl mb-1">💤</span>
-                <span>开始睡觉</span>
-            </button>
-            <button id="btnEndSleep" onclick="endSleep()" class="flex flex-col items-center bg-amber-400 text-white p-4 rounded-xl font-bold shadow-lg shadow-amber-100 active:scale-95 transition-transform">
-                <span class="text-2xl mb-1">☀️</span>
-                <span>醒来了</span>
-            </button>
+            <div class="bg-white/10 p-3 rounded-2xl backdrop-blur-sm">
+                <p class="text-[10px] opacity-80">今日总奶量</p>
+                <p class="text-2xl font-bold mt-1" id="todayMilk">0 <span class="text-xs">ml</span></p>
+            </div>
+            <div class="bg-white/10 p-3 rounded-2xl backdrop-blur-sm">
+                <p class="text-[10px] opacity-80">今日总睡眠</p>
+                <p class="text-2xl font-bold mt-1" id="todaySleep">0 <span class="text-xs">min</span></p>
+            </div>
         </div>
-        <p id="sleepStatus" class="text-center text-xs text-slate-400 mt-3 italic">当前状态：清醒中</p>
     </div>
 
-    <div class="bg-white p-4 rounded-xl shadow-sm mb-6 flex justify-between items-center text-sm border border-slate-100">
-        <div class="flex items-center gap-2">
-            <span class="text-slate-500">提醒:</span>
-            <input type="number" id="remindInterval" value="3" class="border rounded p-1 w-10 text-center">
-            <span class="text-slate-500">小时后</span>
-        </div>
-        <button onclick="setReminder()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-bold">设定闹钟</button>
-    </div>
+    <div class="px-5 space-y-6">
+        <section class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-bold text-slate-700">🍼 快速记奶</h2>
+                <input type="number" id="milkAmount" value="120" class="w-16 border-b-2 border-emerald-400 text-center font-black text-emerald-600 focus:outline-none bg-transparent">
+            </div>
+            <div class="grid grid-cols-4 gap-3 mb-6">
+                <button onclick="setAmount(90)" class="bg-slate-50 py-3 rounded-xl text-sm font-semibold active:bg-emerald-50">90</button>
+                <button onclick="setAmount(120)" class="bg-slate-50 py-3 rounded-xl text-sm font-semibold active:bg-emerald-50">120</button>
+                <button onclick="setAmount(150)" class="bg-slate-50 py-3 rounded-xl text-sm font-semibold active:bg-emerald-50">150</button>
+                <button onclick="setAmount(180)" class="bg-slate-50 py-3 rounded-xl text-sm font-semibold active:bg-emerald-50">180</button>
+            </div>
+            <button onclick="logFeeding()" class="w-full bg-emerald-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-emerald-100 active:scale-[0.98] transition-all">确认记录</button>
+        </section>
 
-    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="font-bold text-slate-700">最近动态</h2>
-            <button onclick="clearAll()" class="text-xs text-slate-300 hover:text-red-400 transition-colors">清空本地数据</button>
-        </div>
-        <ul id="logList" class="space-y-4"></ul>
+        <section class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+            <h2 class="font-bold text-slate-700 mb-4">😴 睡眠计时</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="startSleep()" class="bg-slate-800 text-white py-4 rounded-2xl font-bold flex flex-col items-center active:scale-95 transition-all">
+                    <span>开始睡觉</span>
+                    <span id="sleepStartTimeDisplay" class="text-[10px] opacity-50 font-normal mt-1">点击开始</span>
+                </button>
+                <button onclick="endSleep()" class="bg-amber-400 text-amber-900 py-4 rounded-2xl font-bold flex flex-col items-center active:scale-95 transition-all">
+                    <span>醒来了</span>
+                    <span class="text-[10px] opacity-60 font-normal mt-1 text-amber-800 font-bold tracking-tight">自动结算记录</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-slate-800 p-5 rounded-3xl shadow-xl text-white">
+            <h2 class="text-xs font-bold opacity-50 mb-4 tracking-tighter uppercase">数据保险箱</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="exportCSV()" class="bg-white/10 hover:bg-white/20 py-3 rounded-xl text-xs flex items-center justify-center gap-2 border border-white/10">
+                    📤 导出备份
+                </button>
+                <label class="bg-white/10 hover:bg-white/20 py-3 rounded-xl text-xs flex items-center justify-center gap-2 border border-white/10 cursor-pointer text-center">
+                    📥 导入恢复
+                    <input type="file" id="importFile" class="hidden" accept=".csv" onchange="importCSV(this)">
+                </label>
+            </div>
+        </section>
+
+        <div id="logList" class="space-y-3 pb-10"></div>
     </div>
 
     <script>
-        // 初始化数据库
-        const db = new Dexie("BabyTrackerPro");
-        db.version(2).stores({ 
-            logs: "++id, type, startTime, endTime, value, duration" 
-        });
+        const db = new Dexie("BabyGuardianDB");
+        db.version(1).stores({ logs: "++id, type, timestamp, value, rawValue" });
 
-        // 睡眠逻辑变量
         let sleepStartTime = localStorage.getItem('lastSleepTime');
-        updateSleepStatusUI();
 
-        function setAmount(num) {
-            document.getElementById('milkAmount').value = num;
-        }
+        function setAmount(n) { document.getElementById('milkAmount').value = n; }
 
-        // 1. 喂奶记录
         async function logFeeding() {
-            const amount = document.getElementById('milkAmount').value;
-            await db.logs.add({ 
-                type: '🍼 喂奶', 
-                startTime: new Date().toISOString(), 
-                value: amount + 'ml' 
-            });
-            renderLogs();
+            const v = parseInt(document.getElementById('milkAmount').value);
+            await db.logs.add({ type: '喂奶', timestamp: new Date(), value: v + 'ml', rawValue: v });
+            updateAll();
         }
 
-        // 2. 开始睡觉
         function startSleep() {
-            const now = new Date().toISOString();
-            localStorage.setItem('lastSleepTime', now);
-            sleepStartTime = now;
-            updateSleepStatusUI();
-            alert("已记录开始睡觉时间");
+            const now = new Date();
+            localStorage.setItem('lastSleepTime', now.toISOString());
+            sleepStartTime = now.toISOString();
+            updateAll();
         }
 
-        // 3. 醒来了（结束睡觉）
         async function endSleep() {
-            if (!sleepStartTime) {
-                alert("还没有记录开始睡觉的时间哦！");
-                return;
-            }
-            
-            const start = new Date(sleepStartTime);
-            const end = new Date();
-            const diffMs = end - start;
-            const diffHrs = Math.floor(diffMs / 3600000);
-            const diffMins = Math.round((diffMs % 3600000) / 60000);
-            
-            const durationStr = `${diffHrs > 0 ? diffHrs + '小时' : ''}${diffMins}分钟`;
-
+            if (!sleepStartTime) return alert("还没有记录开始时间");
+            const diffMin = Math.round((new Date() - new Date(sleepStartTime)) / 60000);
             await db.logs.add({
-                type: '😴 睡眠',
-                startTime: start.toISOString(),
-                endTime: end.toISOString(),
-                value: durationStr,
-                duration: diffMs
+                type: '睡眠',
+                timestamp: new Date(),
+                value: (diffMin >= 60 ? Math.floor(diffMin/60)+'h'+(diffMin%60)+'m' : diffMin+'m'),
+                rawValue: diffMin
             });
-
             localStorage.removeItem('lastSleepTime');
             sleepStartTime = null;
-            updateSleepStatusUI();
-            renderLogs();
-            alert(`宝宝睡了 ${durationStr}`);
+            updateAll();
         }
 
-        function updateSleepStatusUI() {
-            const statusText = document.getElementById('sleepStatus');
-            if (sleepStartTime) {
-                const timeStr = new Date(sleepStartTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                statusText.innerText = `当前状态：从 ${timeStr} 开始睡觉中...`;
-                statusText.classList.replace('text-slate-400', 'text-indigo-500');
-            } else {
-                statusText.innerText = `当前状态：清醒中`;
-                statusText.classList.replace('text-indigo-500', 'text-slate-400');
-            }
-        }
+        async function updateAll() {
+            const startOfToday = new Date();
+            startOfToday.setHours(0,0,0,0);
+            const todayLogs = await db.logs.where('timestamp').above(startOfToday).toArray();
+            
+            document.getElementById('todayMilk').innerHTML = `${todayLogs.filter(l=>l.type==='喂奶').reduce((s,c)=>s+c.rawValue,0)} <small class='font-normal uppercase tracking-widest text-[10px]'>ml</small>`;
+            document.getElementById('todaySleep').innerHTML = `${todayLogs.filter(l=>l.type==='睡眠').reduce((s,c)=>s+c.rawValue,0)} <small class='font-normal uppercase tracking-widest text-[10px]'>min</small>`;
 
-        // 渲染列表
-        async function renderLogs() {
-            const allLogs = await db.logs.orderBy('id').reverse().limit(15).toArray();
-            const list = document.getElementById('logList');
-            list.innerHTML = allLogs.map(log => {
-                const time = new Date(log.startTime).toLocaleTimeString('zh-CN', {hour12:false, hour:'2-digit', minute:'2-digit'});
-                return `
-                <li class="flex justify-between items-start">
-                    <div class="flex flex-col">
-                        <span class="font-bold text-slate-800">${log.type}</span>
-                        <span class="text-xs text-slate-400">${time}</span>
+            document.getElementById('sleepStartTimeDisplay').innerText = sleepStartTime ? `从 ${new Date(sleepStartTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} 睡起` : '点击记录';
+
+            const allLogs = await db.logs.orderBy('timestamp').reverse().limit(20).toArray();
+            document.getElementById('logList').innerHTML = allLogs.map(l => `
+                <div class="bg-white p-4 rounded-2xl flex justify-between items-center shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-3 text-sm">
+                        <span class="text-xl">${l.type === '喂奶' ? '🍼' : '😴'}</span>
+                        <div>
+                            <p class="font-bold">${l.type}</p>
+                            <p class="text-[10px] text-slate-400">${new Date(l.timestamp).toLocaleString([],{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}</p>
+                        </div>
                     </div>
-                    <div class="text-right">
-                        <span class="text-indigo-600 font-bold">${log.value}</span>
-                    </div>
-                </li>`;
-            }).join('');
+                    <span class="font-black text-emerald-600">${l.value}</span>
+                </div>
+            `).join('');
         }
 
-        function setReminder() {
-            const hours = document.getElementById('remindInterval').value;
-            alert(`闹钟已设定：${hours}小时后提示`);
-            setTimeout(() => {
-                if (Notification.permission === "granted") {
-                    new Notification("🍼 喂奶提醒", { body: "离上次记录已经过去很久啦" });
+        // --- 备份功能 ---
+        async function exportCSV() {
+            const all = await db.logs.toArray();
+            let csv = "类型,时间,数值,原始值\n";
+            all.forEach(l => {
+                csv += `${l.type},${new Date(l.timestamp).toLocaleString()},${l.value},${l.rawValue}\n`;
+            });
+            const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `baby_log_${new Date().toLocaleDateString()}.csv`;
+            link.click();
+        }
+
+        function importCSV(input) {
+            const reader = new FileReader();
+            reader.onload = async function() {
+                const lines = reader.result.split('\n').slice(1);
+                for (let line of lines) {
+                    const [type, time, value, raw] = line.split(',');
+                    if (type) {
+                        await db.logs.add({ type, timestamp: new Date(time), value, rawValue: parseInt(raw) });
+                    }
                 }
-                alert("🍼 喂奶提醒：时间到啦！");
-            }, hours * 3600 * 1000);
+                updateAll();
+                alert("导入成功！");
+            };
+            reader.readAsText(input.files[0]);
         }
 
-        async function clearAll() {
-            if(confirm("确定要清空所有历史记录吗？")) {
-                await db.logs.clear();
-                localStorage.removeItem('lastSleepTime');
-                sleepStartTime = null;
-                updateSleepStatusUI();
-                renderLogs();
-            }
-        }
-
-        if (Notification.permission !== "denied") Notification.requestPermission();
-        renderLogs();
+        updateAll();
     </script>
 </body>
 </html>
